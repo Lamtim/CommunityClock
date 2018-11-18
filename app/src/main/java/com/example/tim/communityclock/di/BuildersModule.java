@@ -1,7 +1,7 @@
 package com.example.tim.communityclock.di;
 
-import com.example.tim.communityclock.MainActivity;
 import com.example.tim.communityclock.MainModule;
+import com.example.tim.communityclock.ui.main.MainActivity;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
