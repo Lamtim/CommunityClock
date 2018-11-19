@@ -1,4 +1,4 @@
-package com.example.tim.communityclock;
+package com.example.tim.communityclock.ui.main;
 
 import android.arch.lifecycle.ViewModelProvider;
 
