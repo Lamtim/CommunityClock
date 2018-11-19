@@ -2,7 +2,7 @@ package com.example.tim.communityclock.di;
 
 
 import com.example.tim.communityclock.App;
-import com.example.tim.communityclock.MainModule;
+import com.example.tim.communityclock.ui.main.MainModule;
 
 import javax.inject.Singleton;
 
