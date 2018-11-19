@@ -2,7 +2,6 @@ package com.example.tim.communityclock.ui.alarmdisplay
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import com.example.tim.communityclock.R
 import android.app.AlarmManager
 import android.app.PendingIntent
@@ -16,19 +15,24 @@ import android.view.WindowManager
 import android.widget.TextView
 import java.text.SimpleDateFormat
 import android.media.MediaPlayer
+import android.net.Uri
+import com.example.tim.communityclock.ui.base.BaseActivity
 import com.example.tim.communityclock.utils.DateUtils
+import javax.inject.Inject
 
 
-class AlarmDisplayActivity: AppCompatActivity(), AlarmDisplayInteractor{
+class AlarmDisplayActivity: BaseActivity(), AlarmDisplayInteractor{
+
+    @set:Inject
+    var mAlarmDisplayViewModel: AlarmDisplayViewModel? = null
+
     @SuppressLint("SimpleDateFormat")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         window.requestFeature(Window.FEATURE_ACTION_BAR)
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON or
-                WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD or
-                WindowManager.LayoutParams.FLAG_ALLOW_LOCK_WHILE_SCREEN_ON or
-                WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON)
+                WindowManager.LayoutParams.FLAG_ALLOW_LOCK_WHILE_SCREEN_ON)
         actionBar?.hide()
         setContentView(R.layout.activity_lock_screen)
 
@@ -40,7 +44,7 @@ class AlarmDisplayActivity: AppCompatActivity(), AlarmDisplayInteractor{
             closeRing()
         }
 
-        val mPlayer = MediaPlayer.create(this, R.raw.alarm1)
+        val mPlayer = MediaPlayer.create(this, Uri.parse(mAlarmDisplayViewModel!!.getSong()))
         mPlayer.start()
         mPlayer.setOnCompletionListener {
             mPlayer.start()

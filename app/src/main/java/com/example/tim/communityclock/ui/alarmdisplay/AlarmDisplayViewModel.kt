@@ -1,10 +1,11 @@
 package com.example.tim.communityclock.ui.alarmdisplay
 
-import android.arch.lifecycle.ViewModel
+import com.example.tim.communityclock.ui.base.BaseViewModel
 
-class AlarmDisplayViewModel(): ViewModel(){
+class AlarmDisplayViewModel(): BaseViewModel<AlarmDisplayInteractor>() {
 
     fun getSong():String{
        return "https://www.youtube.com/watch?v=daMvESm6GNs"
     }
+
 }
