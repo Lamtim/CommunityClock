@@ -8,7 +8,7 @@ public class ViewModelProviderFactory<V> implements ViewModelProvider.Factory {
 
     private V viewModel;
 
-    ViewModelProviderFactory(V viewModel){
+    public ViewModelProviderFactory(V viewModel){
         this.viewModel = viewModel;
     }
     @NonNull
