@@ -1,5 +1,6 @@
 package com.example.tim.communityclock.ui.alarmdisplay
 
+import com.example.tim.communityclock.ViewModelProviderFactory
 import dagger.Module
 import dagger.Provides
 
@@ -7,8 +8,8 @@ import dagger.Provides
 class AlarmDisplayActivityModule {
 
     @Provides
-    private fun provideAlarmDisplayViewModel(): AlarmDisplayActivity {
-        return AlarmDisplayActivity()
+    fun provideAlarmDisplayViewModel(): AlarmDisplayViewModel {
+        return AlarmDisplayViewModel()
     }
 
 }

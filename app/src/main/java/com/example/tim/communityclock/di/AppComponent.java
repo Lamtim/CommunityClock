@@ -2,6 +2,7 @@ package com.example.tim.communityclock.di;
 
 
 import com.example.tim.communityclock.App;
+import com.example.tim.communityclock.ui.alarmdisplay.AlarmDisplayActivityModule;
 import com.example.tim.communityclock.ui.main.MainModule;
 
 import javax.inject.Singleton;
@@ -14,6 +15,7 @@ import dagger.android.support.AndroidSupportInjectionModule;
 @Component(modules = {
         AndroidSupportInjectionModule.class,
         MainModule.class,
+        AlarmDisplayActivityModule.class,
         BuildersModule.class})
 public interface AppComponent {
     @Component.Builder
