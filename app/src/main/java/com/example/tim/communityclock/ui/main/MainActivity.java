@@ -56,4 +56,5 @@ public class MainActivity extends AppCompatActivity {
         mAlarmAdapter = new AlarmAdapter(this);
         mAlarmRV.setAdapter(mAlarmAdapter);
     }
+
 }
