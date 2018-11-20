@@ -7,9 +7,4 @@ import dagger.Provides
 @Module
 class AlarmDisplayActivityModule {
 
-    @Provides
-    fun provideAlarmDisplayViewModel(): AlarmDisplayViewModel {
-        return AlarmDisplayViewModel()
-    }
-
 }

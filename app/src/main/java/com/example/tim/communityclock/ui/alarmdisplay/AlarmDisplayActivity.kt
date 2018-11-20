@@ -44,7 +44,7 @@ class AlarmDisplayActivity: BaseActivity(), AlarmDisplayInteractor{
             closeRing()
         }
 
-        val mPlayer = MediaPlayer.create(this, Uri.parse(mAlarmDisplayViewModel!!.getSong()))
+        val mPlayer = MediaPlayer.create(this, R.raw.alarm1)
         mPlayer.start()
         mPlayer.setOnCompletionListener {
             mPlayer.start()

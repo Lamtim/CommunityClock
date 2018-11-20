@@ -17,6 +17,7 @@ import dagger.android.support.AndroidSupportInjectionModule
     AndroidInjectionModule::class,
     ViewModelModule::class,
     MainModule::class,
+    AlarmDisplayActivityModule::class,
     BuildersModule::class])
 interface AppComponent {
     @Component.Builder
