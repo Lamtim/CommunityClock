@@ -16,7 +16,6 @@ import dagger.android.support.AndroidSupportInjectionModule
 @Component(modules = [
     AndroidInjectionModule::class,
     ViewModelModule::class,
-    MainModule::class,
     BuildersModule::class])
 interface AppComponent {
     @Component.Builder
