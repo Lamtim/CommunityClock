@@ -23,11 +23,6 @@ abstract class ViewModelModule {
     abstract fun bindMainViewModel(mainViewModel: MainViewModel): ViewModel
 
     @Binds
-    @IntoMap
-    @ViewModelKey(AlarmDisplayViewModel::class)
-    abstract fun bindAlarmDisplayViewModel(alarmDisplayViewModel: AlarmDisplayViewModel): ViewModel
-
-    @Binds
     abstract fun bindViewModelFactory(factory: ViewModelProviderFactory): ViewModelProvider.Factory
 
 }

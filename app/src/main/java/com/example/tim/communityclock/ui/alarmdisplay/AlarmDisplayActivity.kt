@@ -24,7 +24,7 @@ import javax.inject.Inject
 class AlarmDisplayActivity: BaseActivity(), AlarmDisplayInteractor{
 
     @set:Inject
-    var mAlarmDisplayViewModel: AlarmDisplayViewModel? = null
+    lateinit var mAlarmDisplayViewModel: AlarmDisplayViewModel
 
     @SuppressLint("SimpleDateFormat")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,7 +44,7 @@ class AlarmDisplayActivity: BaseActivity(), AlarmDisplayInteractor{
             closeRing()
         }
 
-        val mPlayer = MediaPlayer.create(this, R.raw.alarm1)
+        val mPlayer = MediaPlayer.create(this, mAlarmDisplayViewModel.getSong())
         mPlayer.start()
         mPlayer.setOnCompletionListener {
             mPlayer.start()
