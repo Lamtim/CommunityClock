@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.tim.communityclock">
 
-
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
 
@@ -16,41 +15,41 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-
         <service android:name=".data.remote.notification.FirebaseServices">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+        <service
+            android:name=".services.AlarmService"
+            android:enabled="true" />
 
-        <service android:enabled="true" android:name=".services.AlarmService" />
-
-
-        <activity
-            android:name=".ui.main.MainActivity">
-        </activity>
-
-        <activity
-            android:name=".ui.alarmdisplay.AlarmDisplayActivity"
-            android:showOnLockScreen="true"
-            android:screenOrientation="sensorPortrait"
-            android:theme="@style/AppThemeNoActionBar">
+        <activity android:name=".ui.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.alarmdisplay.AlarmDisplayActivity"
+            android:screenOrientation="sensorPortrait"
+            android:showOnLockScreen="true"
+            android:theme="@style/AppThemeNoActionBar">
+        </activity>
 
-        <!-- <meta-data
+        <!--
+         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/ic_stat_ic_notification" />
          Set color used with incoming notification messages. This is used when no color is set for the incoming
-             notification message. See README(https://goo.gl/6BKBk7) for more. -->
+             notification message. See README(https://goo.gl/6BKBk7) for more.
+        -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorAccent" />
 
+        <activity android:name=".ui.setalarm.SetAlarmActivity"></activity>
     </application>
 
 </manifest>
