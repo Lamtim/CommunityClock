@@ -7,7 +7,6 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.support.design.button.MaterialButton
 import android.view.Window
 import com.example.tim.communityclock.services.AlarmService
 import java.util.*
@@ -15,16 +14,16 @@ import android.view.WindowManager
 import android.widget.TextView
 import java.text.SimpleDateFormat
 import android.media.MediaPlayer
-import android.net.Uri
 import com.example.tim.communityclock.ui.base.BaseActivity
 import com.example.tim.communityclock.utils.DateUtils
+import kotlinx.android.synthetic.main.activity_lock_screen.*
 import javax.inject.Inject
 
 
 class AlarmDisplayActivity: BaseActivity(), AlarmDisplayInteractor{
 
     @set:Inject
-    var mAlarmDisplayViewModel: AlarmDisplayViewModel? = null
+    lateinit var mAlarmDisplayViewModel: AlarmDisplayViewModel
 
     @SuppressLint("SimpleDateFormat")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,15 +35,15 @@ class AlarmDisplayActivity: BaseActivity(), AlarmDisplayInteractor{
         actionBar?.hide()
         setContentView(R.layout.activity_lock_screen)
 
-        findViewById<MaterialButton>(R.id.report).setOnClickListener {
+        report.setOnClickListener {
             snoozeRing()
         }
 
-        findViewById<MaterialButton>(R.id.close).setOnClickListener {
+        close.setOnClickListener {
             closeRing()
         }
 
-        val mPlayer = MediaPlayer.create(this, mAlarmDisplayViewModel!!.getSong())
+        val mPlayer = MediaPlayer.create(this, mAlarmDisplayViewModel.getSong())
         mPlayer.start()
         mPlayer.setOnCompletionListener {
             mPlayer.start()
