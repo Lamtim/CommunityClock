@@ -10,16 +10,14 @@ import kotlinx.android.synthetic.main.activity_set_alarm.*
 import java.util.*
 import javax.inject.Inject
 
-class SetAlarmViewModel @Inject constructor(): BaseViewModel<SetAlarmInteractor>() {
+class SetAlarmViewModel @Inject constructor() : BaseViewModel<SetAlarmInteractor>() {
 
-    var hourLeft : MutableLiveData<Long> = MutableLiveData()
-    var minLeft : MutableLiveData<Long> = MutableLiveData()
-    var timeLeft: MediatorLiveData<Long> = MediatorLiveData()
-
+    var hourLeft: MutableLiveData<Long> = MutableLiveData()
+    var minuteLeft: MutableLiveData<Long> = MutableLiveData()
+    var alarmCreated: MutableLiveData<Alarm> = MutableLiveData()
 
 
     fun updateLeftTime(hour: Int, minute: Int) {
-        Log.v("TimePicker", "Hour $hour Minute $minute");
         val calendar = Calendar.getInstance()
         calendar.timeInMillis = System.currentTimeMillis()
         calendar.set(Calendar.HOUR_OF_DAY, hour)
@@ -27,31 +25,21 @@ class SetAlarmViewModel @Inject constructor(): BaseViewModel<SetAlarmInteractor>
         calendar.set(Calendar.SECOND, 0)
 
         val date: Date = calendar.time
-        Log.v("DatePicker", "" + date)
         var timeDiff = (date.time - System.currentTimeMillis())
-        Log.v("TimeLeft", "" + timeDiff+ " = "+ date.time+" + "+System.currentTimeMillis())
         val msPerHour = 1000 * 60 * 60
-        if (timeDiff > 0) {
-            timeLeft.addSource(hourLeft) { value -> timeLeft.value = value}
-            hourLeft.value = timeDiff / msPerHour
-            minLeft.value = (timeDiff / (1000 * 60)) % 60
-            Log.v("minLeft", "" + minLeft)
-            //tv_test.text = "Il reste $hourLeft heure et $minLeft minutes"
-        }else{
-            timeDiff += 24*msPerHour
-            hourLeft.value = timeDiff / msPerHour
-            minLeft.value = (timeDiff / (1000 * 60)) % 60
-            //tv_test.text = "Il reste $hourLeft heure et $minLeft minutes"
+        if (timeDiff <= 0) {
+            timeDiff += 24 * msPerHour
         }
+        hourLeft.value = timeDiff / msPerHour
+        minuteLeft.value = (timeDiff / (1000 * 60)) % 60
 
         calendar.clear();
         calendar.timeInMillis = System.currentTimeMillis()
         calendar.add(Calendar.MILLISECOND, timeDiff.toInt())
-        val alarm = Alarm(calendar.timeInMillis, "lala")
-        //tv_display_ring.text = alarm.formatTime()
+        alarmCreated.value = Alarm(calendar.timeInMillis, "lala")
     }
 
-    fun setNewAlarm(){
-
+    fun setNewAlarm() {
+        //Stockage de l'alarm en sur Room
     }
 }

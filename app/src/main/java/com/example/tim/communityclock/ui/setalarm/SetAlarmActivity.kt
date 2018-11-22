@@ -8,31 +8,50 @@ import android.support.customview.R.id.time
 import android.util.Log
 import com.example.tim.communityclock.R
 import com.example.tim.communityclock.data.model.db.Alarm
+import com.example.tim.communityclock.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_set_alarm.*
 import java.sql.Time
 import java.util.*
 import javax.inject.Inject
 
-class SetAlarmActivity : AppCompatActivity() {
+class SetAlarmActivity : BaseActivity() {
 
-    lateinit var setAlarmViewModel:SetAlarmViewModel
+    @Inject
+    lateinit var setAlarmViewModel: SetAlarmViewModel
+    var hours: Long = 0
+    var minutes: Long = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_set_alarm)
 
-        setAlarmViewModel.timeLeft!!.observe(this,
-                android.arch.lifecycle.Observer{ lala ->
-                    if (lala != null) {
-                        updateLeftTime(lala,0)
+        setAlarmViewModel.hourLeft!!.observe(this,
+                android.arch.lifecycle.Observer { hours ->
+                    if (hours != null) {
+                        updateLeftTime(hours, minutes)
                     }
-        })
+                })
+        setAlarmViewModel.minuteLeft!!.observe(this,
+                android.arch.lifecycle.Observer { minutes ->
+                    if (minutes != null) {
+                        updateLeftTime(hours, minutes)
+                    }
+                }
+        )
+        setAlarmViewModel.alarmCreated!!.observe(this,
+                android.arch.lifecycle.Observer { alarm ->
+                    if (alarm != null) {
+                        tv_display_ring.text = alarm.formatTime()
+                    }
+                }
+        )
 
 
         tv_test.text = "off"
         tp_alarm.setOnTimeChangedListener { tp_alarm, hourOfDay, minute ->
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 setAlarmViewModel.updateLeftTime(tp_alarm.hour, tp_alarm.minute)
-            }else{
+            } else {
                 setAlarmViewModel.updateLeftTime(tp_alarm.currentHour, tp_alarm.currentMinute)
             }
         }
@@ -42,7 +61,9 @@ class SetAlarmActivity : AppCompatActivity() {
         }
     }
 
-    fun updateLeftTime(hourLeft: Long, minuteLeft:Long ){
+    fun updateLeftTime(hourLeft: Long, minuteLeft: Long) {
+        hours = hourLeft
+        minutes = minuteLeft
         tv_test.text = "Il reste $hourLeft heure et $minuteLeft minutes"
     }
 }
