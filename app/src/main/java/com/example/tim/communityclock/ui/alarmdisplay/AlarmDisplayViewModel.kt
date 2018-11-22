@@ -1,11 +1,16 @@
 package com.example.tim.communityclock.ui.alarmdisplay
 
+import com.example.tim.communityclock.R
+import com.example.tim.communityclock.domain.message.usecase.GetOneMessageUseCase
+import com.example.tim.communityclock.domain.song.usecase.GetOneSongUseCase
 import com.example.tim.communityclock.ui.base.BaseViewModel
+import javax.inject.Inject
 
-class AlarmDisplayViewModel(): BaseViewModel<AlarmDisplayInteractor>() {
+class AlarmDisplayViewModel @Inject constructor(private val getOneSongUseCase: GetOneSongUseCase): BaseViewModel<AlarmDisplayInteractor>() {
 
-    fun getSong():String{
-       return "https://www.youtube.com/watch?v=daMvESm6GNs"
+
+    fun getSong():Int{
+       return R.raw.alarm1
     }
 
 }
