@@ -4,6 +4,7 @@ import com.example.tim.communityclock.ui.alarmdisplay.AlarmDisplayActivity
 import com.example.tim.communityclock.ui.alarmdisplay.AlarmDisplayActivityModule
 import com.example.tim.communityclock.ui.main.MainModule
 import com.example.tim.communityclock.ui.main.MainActivity
+import com.example.tim.communityclock.ui.setalarm.SetAlarmActivity
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -11,9 +12,12 @@ import dagger.android.ContributesAndroidInjector
 @Module
 abstract class BuildersModule {
 
-    @ContributesAndroidInjector(modules = [MainModule::class])
+    @ContributesAndroidInjector
     internal abstract fun bindMainActivity(): MainActivity
 
-    @ContributesAndroidInjector(modules = [AlarmDisplayActivityModule::class])
+    @ContributesAndroidInjector
     internal abstract fun bindAlarmDisplayActivity(): AlarmDisplayActivity
+
+    @ContributesAndroidInjector
+    internal abstract fun bindSetAlarmActivity(): SetAlarmActivity
 }
