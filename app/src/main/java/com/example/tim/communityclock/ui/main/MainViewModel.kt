@@ -1,19 +1,24 @@
 package com.example.tim.communityclock.ui.main
 
+import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
+import com.example.tim.communityclock.data.local.AlarmRepositoryImpl
 
 import com.example.tim.communityclock.data.model.db.Alarm
 
 import java.util.ArrayList
 import java.util.Date
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 import javax.inject.Inject
 
-class MainViewModel @Inject constructor() : ViewModel() {
+class MainViewModel @Inject constructor(val alarmRepositoryImpl: AlarmRepositoryImpl) : ViewModel() {
 
-    private var mAlarmsList: MutableLiveData<List<Alarm>>? = null
+    private var mAlarmsList: LiveData<List<Alarm>>? = null
+    private var executorService: ExecutorService? = null
 
-    val alarms: MutableLiveData<List<Alarm>>?
+    val alarms: LiveData<List<Alarm>>?
         get() {
             if (mAlarmsList == null) {
                 createAlarmList()
@@ -22,11 +27,16 @@ class MainViewModel @Inject constructor() : ViewModel() {
         }
 
     private fun createAlarmList() {
-        mAlarmsList = MutableLiveData()
-        val list = ArrayList<Alarm>()
-        list.add(Alarm(Date().time, "Bonne journée"))
-        list.add(Alarm(Date().time, "Bonne journée"))
-        list.add(Alarm(Date().time, "Bonne journée"))
-        mAlarmsList!!.value = list
+        executorService = Executors.newSingleThreadExecutor()
+        executorService!!.execute { alarmRepositoryImpl.insertAlarm(Alarm(Date().time, "Bonne journée"))}
+        executorService = Executors.newSingleThreadExecutor()
+        executorService!!.execute { alarmRepositoryImpl.insertAlarm(Alarm(Date().time, "Bonne journée"))}
+        executorService = Executors.newSingleThreadExecutor()
+        executorService!!.execute { alarmRepositoryImpl.insertAlarm(Alarm(Date().time, "Bonne journée"))}
+        getAlarmList()
+    }
+
+    private fun getAlarmList(){
+        mAlarmsList = alarmRepositoryImpl.getAlarms()
     }
 }
