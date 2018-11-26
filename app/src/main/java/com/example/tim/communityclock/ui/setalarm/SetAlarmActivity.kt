@@ -58,6 +58,8 @@ class SetAlarmActivity : BaseActivity() {
         button_set.setOnClickListener {
             val calendar = Calendar.getInstance()
             val time = Time(tp_alarm.hour, tp_alarm.minute, 0)
+            Log.e("setAlarm","setalarm")
+            setAlarmViewModel.setNewAlarm("Salut")
         }
     }
 

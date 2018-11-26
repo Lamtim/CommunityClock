@@ -2,6 +2,8 @@ package com.example.tim.communityclock.di
 
 
 import com.example.tim.communityclock.App
+import com.example.tim.communityclock.data.remote.core.DatabaseModule
+import com.example.tim.communityclock.data.remote.core.RepositoryModule
 import com.example.tim.communityclock.ui.alarmdisplay.AlarmDisplayActivityModule
 import com.example.tim.communityclock.ui.main.MainModule
 
@@ -16,7 +18,10 @@ import dagger.android.support.AndroidSupportInjectionModule
 @Component(modules = [
     AndroidInjectionModule::class,
     ViewModelModule::class,
-    BuildersModule::class])
+    BuildersModule::class,
+    DatabaseModule::class,
+    RepositoryModule::class
+])
 interface AppComponent {
     @Component.Builder
     interface Builder {

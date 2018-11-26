@@ -1,9 +1,11 @@
 package com.example.tim.communityclock.data.remote.api
 
+import android.util.Log
 import com.example.tim.communityclock.data.model.api.Message
-import com.example.tim.communityclock.domain.message.repository.MessagesRepository
+import com.example.tim.communityclock.domain.message.repository.MessageRepository
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.ObservableOnSubscribe
 import io.reactivex.schedulers.Schedulers
@@ -12,7 +14,22 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-internal class MessageRepositoryImpl @Inject constructor(private val db: FirebaseFirestore) : MessagesRepository {
+class MessageRepositoryImpl @Inject constructor(private val db: FirebaseFirestore) : MessageRepository {
+
+    override fun sendMessage(message: Message): Completable {
+        Log.e("sendMessage","sendMessage")
+        return Completable.create { emitter ->
+            db.collection("messages")
+                    .add(message)
+                    .addOnSuccessListener {
+                        Log.e("COMPLETED","COMPLETED")
+                        emitter.onComplete()
+                    }
+                    .addOnFailureListener {
+                        Log.e("FAILED","FAILED")
+                        emitter.onError(it) }
+        }.subscribeOn(Schedulers.io())
+    }
 
     override fun getOneMessage(): Observable<Message> {
         return Observable.create(ObservableOnSubscribe<Message> { emitter ->
