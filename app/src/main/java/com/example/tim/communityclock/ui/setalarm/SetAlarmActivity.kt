@@ -21,6 +21,7 @@ class SetAlarmActivity : BaseActivity() {
     var hours: Long = 0
     var minutes: Long = 0
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_set_alarm)
@@ -59,7 +60,7 @@ class SetAlarmActivity : BaseActivity() {
             val calendar = Calendar.getInstance()
             val time = Time(tp_alarm.hour, tp_alarm.minute, 0)
             Log.e("setAlarm","setalarm")
-            setAlarmViewModel.setNewAlarm("Salut")
+            setAlarmViewModel.setNewAlarm("Salut","")
         }
     }
 

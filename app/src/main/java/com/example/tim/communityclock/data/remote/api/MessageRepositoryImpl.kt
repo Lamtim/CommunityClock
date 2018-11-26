@@ -17,7 +17,7 @@ import javax.inject.Singleton
 class MessageRepositoryImpl @Inject constructor(private val db: FirebaseFirestore) : MessageRepository {
 
     override fun sendMessage(message: Message): Completable {
-        Log.e("sendMessage","sendMessage")
+        Log.e("sendMessage","$db")
         return Completable.create { emitter ->
             db.collection("messages")
                     .add(message)
@@ -28,6 +28,12 @@ class MessageRepositoryImpl @Inject constructor(private val db: FirebaseFirestor
                     .addOnFailureListener {
                         Log.e("FAILED","FAILED")
                         emitter.onError(it) }
+                    .addOnCompleteListener {
+                        Log.e("Completed","Completed")
+                    }
+                    .addOnCanceledListener {
+                        Log.e("Canceled","Canceled")
+                    }
         }.subscribeOn(Schedulers.io())
     }
 

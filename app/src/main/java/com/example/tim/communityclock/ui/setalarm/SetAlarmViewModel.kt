@@ -1,18 +1,18 @@
 package com.example.tim.communityclock.ui.setalarm
 
-import android.arch.lifecycle.MediatorLiveData
 import android.arch.lifecycle.MutableLiveData
 import android.util.Log
-import com.example.tim.communityclock.R.id.tv_test
 import com.example.tim.communityclock.data.model.api.Message
 import com.example.tim.communityclock.data.model.db.Alarm
 import com.example.tim.communityclock.data.remote.api.MessageRepositoryImpl
+import com.example.tim.communityclock.data.remote.api.SongRepositoryImpl
 import com.example.tim.communityclock.ui.base.BaseViewModel
-import kotlinx.android.synthetic.main.activity_set_alarm.*
+import java.io.File
 import java.util.*
 import javax.inject.Inject
 
-class SetAlarmViewModel @Inject constructor(val repository: MessageRepositoryImpl) : BaseViewModel<SetAlarmInteractor>() {
+class SetAlarmViewModel @Inject constructor(val repository: MessageRepositoryImpl,
+                                            val repositorySong: SongRepositoryImpl) : BaseViewModel<SetAlarmInteractor>() {
 
     var hourLeft: MutableLiveData<Long> = MutableLiveData()
     var minuteLeft: MutableLiveData<Long> = MutableLiveData()
@@ -41,9 +41,10 @@ class SetAlarmViewModel @Inject constructor(val repository: MessageRepositoryImp
         alarmCreated.value = Alarm(calendar.timeInMillis, "lala")
     }
 
-    fun setNewAlarm(message: String) {
+    fun setNewAlarm(message: String, path: String) {
         Log.e("setAlarm","viewmoded")
         var message = Message("",message)
         repository.sendMessage(message)
+        repositorySong.sendSong(File(path))
     }
 }
