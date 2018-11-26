@@ -15,4 +15,8 @@ class AlarmDisplayViewModel @Inject constructor(): BaseViewModel<AlarmDisplayInt
        return R.raw.alarm1
     }
 
+    fun getAlarm():Int{
+        return R.raw.alarm1
+    }
+
 }
