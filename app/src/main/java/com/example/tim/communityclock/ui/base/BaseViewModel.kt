@@ -5,14 +5,14 @@ import java.lang.ref.WeakReference
 
 open class BaseViewModel<N>: ViewModel(){
 
-    private var mNavigator: WeakReference<N>? = null
+    lateinit var mInteractor: WeakReference<N>
 
-    fun getNavigator(): N? {
-        return mNavigator!!.get()
+    fun getInteractor(): N? {
+        return mInteractor.get()
     }
 
-    fun setNavigator(navigator: N) {
-        this.mNavigator = WeakReference(navigator)
+    fun setInteractor(navigator: N) {
+        this.mInteractor = WeakReference(navigator)
     }
 
 }

@@ -10,5 +10,5 @@ interface MessageRepository {
 
     fun getOneMessage(): Observable<Message>
 
-    fun sendMessage(message: Message): Completable
+    fun sendMessage(message: String): Completable
 }

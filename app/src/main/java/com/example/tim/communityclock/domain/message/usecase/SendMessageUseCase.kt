@@ -4,7 +4,7 @@ import com.example.tim.communityclock.data.model.api.Message
 import com.example.tim.communityclock.domain.message.repository.MessageRepository
 import com.imakeanapp.domain.core.CompletableWithParamUseCase
 
-class SendMessageUseCase (private val repository: MessageRepository) : CompletableWithParamUseCase<Message> {
+class SendMessageUseCase (private val repository: MessageRepository) : CompletableWithParamUseCase<String> {
 
-    override fun execute(t: Message) = repository.sendMessage(t)
+    override fun execute(t: String) = repository.sendMessage(t)
 }
