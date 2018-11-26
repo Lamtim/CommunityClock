@@ -3,9 +3,11 @@ package com.example.tim.communityclock.ui.main
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
+import android.util.Log
 import com.example.tim.communityclock.data.local.AlarmRepositoryImpl
 
 import com.example.tim.communityclock.data.model.db.Alarm
+import org.jetbrains.anko.doAsync
 
 import java.util.ArrayList
 import java.util.Date
@@ -15,28 +17,17 @@ import javax.inject.Inject
 
 class MainViewModel @Inject constructor(val alarmRepositoryImpl: AlarmRepositoryImpl) : ViewModel() {
 
-    private var mAlarmsList: LiveData<List<Alarm>>? = null
-    private var executorService: ExecutorService? = null
-
     val alarms: LiveData<List<Alarm>>?
         get() {
-            if (mAlarmsList == null) {
-                createAlarmList()
-            }
-            return mAlarmsList
+            return alarmRepositoryImpl.getAlarms()
         }
 
-    private fun createAlarmList() {
-        executorService = Executors.newSingleThreadExecutor()
-        executorService!!.execute { alarmRepositoryImpl.insertAlarm(Alarm(Date().time, "Bonne journée"))}
-        executorService = Executors.newSingleThreadExecutor()
-        executorService!!.execute { alarmRepositoryImpl.insertAlarm(Alarm(Date().time, "Bonne journée"))}
-        executorService = Executors.newSingleThreadExecutor()
-        executorService!!.execute { alarmRepositoryImpl.insertAlarm(Alarm(Date().time, "Bonne journée"))}
-        getAlarmList()
+    fun deleteAll(){
+        alarmRepositoryImpl.deleteAll()
     }
 
-    private fun getAlarmList(){
-        mAlarmsList = alarmRepositoryImpl.getAlarms()
+    fun addAlarm(){
+        doAsync { alarmRepositoryImpl.insertAlarm(Alarm(Date().time, "Bonne journée")) }
     }
+
 }

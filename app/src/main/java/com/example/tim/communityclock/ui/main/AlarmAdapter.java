@@ -38,7 +38,10 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
 
     @Override
     public int getItemCount() {
-        return mAlarms.size();
+        if (mAlarms != null)
+            return mAlarms.size();
+        else
+            return 0;
     }
 
     public void setData(List<Alarm> newAlarms) {

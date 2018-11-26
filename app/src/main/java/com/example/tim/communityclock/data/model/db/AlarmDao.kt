@@ -18,4 +18,7 @@ interface AlarmDao {
 
     @Delete
     fun deleteAlarm(alarm: Alarm)
+
+    @Query("DELETE FROM alarm")
+    fun deleteAll()
 }

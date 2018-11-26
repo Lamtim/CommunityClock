@@ -8,4 +8,6 @@ interface AlarmRepository {
     fun getAlarms(): LiveData<List<Alarm>>
 
     fun insertAlarm(alarm: Alarm)
+
+    fun deleteAll()
 }

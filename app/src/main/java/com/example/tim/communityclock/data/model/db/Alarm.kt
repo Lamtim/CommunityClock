@@ -11,7 +11,7 @@ class Alarm(
 ) {
 
     @PrimaryKey(autoGenerate = true)
-    var id: Long = -1
+    var id: Long = 0
 
     fun formatTime(): String? {
         return DateFormat.getTimeInstance(DateFormat.SHORT).format(time)
