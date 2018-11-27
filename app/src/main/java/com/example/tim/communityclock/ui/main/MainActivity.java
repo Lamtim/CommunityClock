@@ -56,8 +56,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void bindViews() {
         mAlarmRV = findViewById(R.id.rv_alarm);
-        findViewById(R.id.button_test).setOnClickListener(v -> {
-            mMainViewModel.addAlarm();
 
         setAlarmFAB = findViewById(R.id.fab_set_alarm);
         setAlarmFAB.setOnClickListener(new View.OnClickListener() {
