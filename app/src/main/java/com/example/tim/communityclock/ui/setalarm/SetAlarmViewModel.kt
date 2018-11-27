@@ -6,7 +6,6 @@ import android.util.Log
 import com.example.tim.communityclock.R.id.tv_test
 import com.example.tim.communityclock.data.model.db.Alarm
 import com.example.tim.communityclock.ui.base.BaseViewModel
-import kotlinx.android.synthetic.main.activity_set_alarm.*
 import java.util.*
 import javax.inject.Inject
 
