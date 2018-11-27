@@ -5,6 +5,7 @@ import android.content.Context
 import com.example.tim.communityclock.data.model.db.AlarmDao
 import com.example.tim.communityclock.data.model.db.AppDatabase
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -16,6 +17,11 @@ class DatabaseModule {
     @Provides
     @Singleton
     fun providesFirebaseFirestore() = FirebaseFirestore.getInstance()
+
+    //Firebase Storage
+    @Provides
+    @Singleton
+    fun providesFirebaseStorage() = FirebaseStorage.getInstance()
 
     //Room Module
     @Singleton

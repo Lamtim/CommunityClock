@@ -1,36 +1,54 @@
 package com.example.tim.communityclock.data.remote.api
 
+import android.net.Uri
+import android.util.Log
 import com.example.tim.communityclock.data.model.db.Song
 import com.example.tim.communityclock.domain.song.repository.SongRepository
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StreamDownloadTask
+import com.google.firebase.storage.UploadTask
+import io.reactivex.Completable
+import io.reactivex.CompletableOnSubscribe
 import io.reactivex.Observable
 import io.reactivex.ObservableOnSubscribe
 import io.reactivex.schedulers.Schedulers
+import java.io.File
 import javax.inject.Inject
 
-class SongRepositoryImpl @Inject constructor(private val db: FirebaseFirestore) : SongRepository {
+class SongRepositoryImpl @Inject constructor(private val db: FirebaseStorage) : SongRepository {
 
-    override fun getOneSong(): Observable<Song> {
-        return Observable.create(ObservableOnSubscribe<Song> { emitter ->
-            db.collection("songs")
-                    .orderBy("song", Query.Direction.DESCENDING)
-                    .addSnapshotListener { snapshots, e ->
-                        if (e != null) {
-                            emitter.onError(e)
-                            return@addSnapshotListener
-                        }
+    override fun sendSong(file: File): Completable {
+        return Completable.create { emitter ->
+            var uri = Uri.fromFile(file)
+            val storageRef = db.reference
+            val riversRef = storageRef.child("images/${file.name}")
+            if(uri.path!!.isEmpty())
+                return@create
+            val uploadTask: UploadTask = riversRef.putFile(uri)
+            uploadTask.addOnFailureListener {
+                emitter.onError(it)
+            }.addOnSuccessListener {
+                emitter.onComplete()
+            }
+        }.subscribeOn(Schedulers.io())
+    }
 
-                        var song: Song = Song("","")
-                        snapshots?.let {
-                            for (doc in snapshots) {
-                                song = Song(doc.getString("id")!!,doc.getString("title")!!)
-                            }
-                        }
-
-                        emitter.onNext(song)
-                    }
+    override fun getOneSong(song: String): Observable<String> {
+        return Observable.create(ObservableOnSubscribe<String> { emitter ->
+            val storageRef = db.reference
+            val pathReference = storageRef.child("songs/$song")
+            val localFile = File.createTempFile("song", "mp3")
+            pathReference.getFile(localFile).addOnSuccessListener {
+                emitter.onNext(localFile.absolutePath)
+                emitter.onComplete()
+            }.addOnFailureListener {
+                emitter.onError(it)
+            }
         }).subscribeOn(Schedulers.io())
     }
+
+
 
 }
