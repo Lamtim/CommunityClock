@@ -2,6 +2,7 @@ package com.example.tim.communityclock.di
 
 
 import com.example.tim.communityclock.App
+import com.example.tim.communityclock.data.remote.core.RepositoryModule
 
 import javax.inject.Singleton
 
@@ -13,8 +14,11 @@ import dagger.android.AndroidInjectionModule
 @Component(modules = [
     AndroidInjectionModule::class,
     AppModule::class,
+    ViewModelModule::class,
+    BuildersModule::class,
     DatabaseModule::class,
-    BuildersModule::class])
+    RepositoryModule::class
+])
 interface AppComponent {
     @Component.Builder
     interface Builder {

@@ -1,11 +1,10 @@
 package com.example.tim.communityclock.domain.song.usecase
 
-import com.example.tim.communityclock.data.model.db.Song
+import com.example.tim.communityclock.domain.core.ObservableWithParamUseCase
 import com.example.tim.communityclock.domain.song.repository.SongRepository
-import com.imakeanapp.domain.core.ObservableUseCase
 
-class GetOneSongUseCase (private val repository: SongRepository) : ObservableUseCase<Song> {
+class GetOneSongUseCase (private val repository: SongRepository) : ObservableWithParamUseCase<String,String> {
 
-    override fun execute() = repository.getOneSong()
+    override fun execute(song: String) = repository.getOneSong(song)
 
 }

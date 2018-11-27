@@ -1,10 +1,13 @@
 package com.example.tim.communityclock.domain.song.repository
 
-import com.example.tim.communityclock.data.model.db.Song
+import io.reactivex.Completable
 import io.reactivex.Observable
+import java.io.File
 
 interface SongRepository {
 
-    fun getOneSong(): Observable<Song>
+    fun getOneSong(song: String): Observable<String>
+
+    fun sendSong(file: File): Completable
 
 }
