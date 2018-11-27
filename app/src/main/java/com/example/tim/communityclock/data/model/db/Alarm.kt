@@ -13,6 +13,9 @@ class Alarm(
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0
 
+    //Voir si le format de l'heure est le meilleur, Long, Calendar, Time, etc ..
+    //Reflechir si ca vaut le coup de stocker la différence de temps jusqu'à la sonnerie
+
     fun formatTime(): String? {
         return DateFormat.getTimeInstance(DateFormat.SHORT).format(time)
     }

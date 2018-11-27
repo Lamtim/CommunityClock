@@ -1,6 +1,8 @@
 package com.example.tim.communityclock.ui.main;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +13,7 @@ import android.view.View;
 import com.example.tim.communityclock.R;
 import com.example.tim.communityclock.ViewModelProviderFactory;
 import com.example.tim.communityclock.data.model.db.Alarm;
+import com.example.tim.communityclock.ui.setalarm.SetAlarmActivity;
 
 import java.sql.Time;
 import java.util.ArrayList;
@@ -28,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView mAlarmRV;
     private AlarmAdapter mAlarmAdapter;
     private MainViewModel mMainViewModel;
+    private FloatingActionButton setAlarmFAB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +58,14 @@ public class MainActivity extends AppCompatActivity {
         mAlarmRV = findViewById(R.id.rv_alarm);
         findViewById(R.id.button_test).setOnClickListener(v -> {
             mMainViewModel.addAlarm();
+
+        setAlarmFAB = findViewById(R.id.fab_set_alarm);
+        setAlarmFAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,SetAlarmActivity.class);
+                startActivity(intent);
+            }
         });
     }
 
