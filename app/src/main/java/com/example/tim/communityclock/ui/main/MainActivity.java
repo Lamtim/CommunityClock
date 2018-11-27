@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.example.tim.communityclock.R;
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mMainViewModel = ViewModelProviders.of(this, mViewModelProviderFactory).get(MainViewModel.class);
+        // mMainViewModel.deleteAll();
         getAlarms();
         bindViews();
         initRecyclerView();
@@ -46,12 +48,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getAlarms() {
-        mMainViewModel.getAlarms().observe(this, alarms ->
-                mAlarmAdapter.setData(alarms));
+        mMainViewModel.getAlarms().observe(this, alarms -> {
+            mAlarmAdapter.setData(alarms);
+            mAlarmAdapter.notifyDataSetChanged();
+        });
     }
 
     private void bindViews() {
         mAlarmRV = findViewById(R.id.rv_alarm);
+
         setAlarmFAB = findViewById(R.id.fab_set_alarm);
         setAlarmFAB.setOnClickListener(new View.OnClickListener() {
             @Override
