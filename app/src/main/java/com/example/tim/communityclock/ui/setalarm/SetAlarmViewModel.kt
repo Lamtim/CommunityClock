@@ -1,15 +1,19 @@
 package com.example.tim.communityclock.ui.setalarm
 
-import android.arch.lifecycle.MediatorLiveData
+import android.annotation.SuppressLint
 import android.arch.lifecycle.MutableLiveData
 import android.util.Log
-import com.example.tim.communityclock.R.id.tv_test
+import android.widget.Toast
 import com.example.tim.communityclock.data.model.db.Alarm
+import com.example.tim.communityclock.data.remote.api.MessageRepositoryImpl
+import com.example.tim.communityclock.data.remote.api.SongRepositoryImpl
 import com.example.tim.communityclock.ui.base.BaseViewModel
+import io.reactivex.android.schedulers.AndroidSchedulers
 import java.util.*
 import javax.inject.Inject
 
-class SetAlarmViewModel @Inject constructor() : BaseViewModel<SetAlarmInteractor>() {
+class SetAlarmViewModel @Inject constructor(val repository: MessageRepositoryImpl,
+                                            val repositorySong: SongRepositoryImpl) : BaseViewModel<SetAlarmInteractor>() {
 
     var hourLeft: MutableLiveData<Long> = MutableLiveData()
     var minuteLeft: MutableLiveData<Long> = MutableLiveData()
@@ -32,13 +36,29 @@ class SetAlarmViewModel @Inject constructor() : BaseViewModel<SetAlarmInteractor
         hourLeft.value = timeDiff / msPerHour
         minuteLeft.value = (timeDiff / (1000 * 60)) % 60
 
-        calendar.clear();
+        calendar.clear()
         calendar.timeInMillis = System.currentTimeMillis()
         calendar.add(Calendar.MILLISECOND, timeDiff.toInt())
         alarmCreated.value = Alarm(calendar.timeInMillis, "lala")
     }
 
-    fun setNewAlarm() {
-        //Stockage de l'alarm en sur Room
+    @SuppressLint("CheckResult")
+    fun setNewAlarm(message: String, path: String) {
+        Log.e("setAlarm","viewmoded")
+        //repository.sendMessage(message).subscribe()
+        //repositorySong.sendSong(File(path)).subscribe()
+        repository.getOneMessage()
+                  .observeOn(AndroidSchedulers.mainThread())
+                  .subscribe(
+                      {
+                          repository.cancelRegistration()
+                          //getInteractor()!!.alarmRegistered(it)
+                      },
+                      {
+                          Log.d("FAILED", "FAILED")
+                      }
+                  )
     }
+
+
 }
