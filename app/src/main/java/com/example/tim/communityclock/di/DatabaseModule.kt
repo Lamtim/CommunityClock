@@ -26,7 +26,7 @@ class DatabaseModule {
     //Room Module
     @Singleton
     @Provides
-    fun provideDatabase(context: Context) : AppDatabase {
+    fun provideDatabase(context: Context): AppDatabase {
         return Room.databaseBuilder(context, AppDatabase::class.java, "communityclock.db")
                 .fallbackToDestructiveMigration().build()
     }
@@ -37,7 +37,7 @@ class DatabaseModule {
 
     @Singleton
     @Provides
-    fun provideAlarmDao(db: AppDatabase) : AlarmDao {
+    fun provideAlarmDao(db: AppDatabase): AlarmDao {
         return db.alarmDao()
     }
 

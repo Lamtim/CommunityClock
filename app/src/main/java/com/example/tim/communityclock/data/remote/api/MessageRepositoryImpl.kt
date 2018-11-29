@@ -23,7 +23,7 @@ class MessageRepositoryImpl @Inject constructor(private val db: FirebaseFirestor
 
     override fun sendMessage(content: String): Completable {
         val randomDate = DateUtils.getRandomDate()
-        val message = Message("message",content,randomDate.time)
+        val message = Message("message", content, randomDate.time)
         return Completable.create { emitter ->
             db.collection("messages")
                     .add(message)
@@ -31,37 +31,38 @@ class MessageRepositoryImpl @Inject constructor(private val db: FirebaseFirestor
                         emitter.onComplete()
                     }
                     .addOnFailureListener {
-                        emitter.onError(it) }
+                        emitter.onError(it)
+                    }
         }.subscribeOn(Schedulers.io())
     }
 
     override fun getOneMessage(): Observable<Message> {
         val pickDate = DateUtils.getRandomDate()
-        Log.e("PISCKDATE","${pickDate.time}")
+        Log.e("PISCKDATE", "${pickDate.time}")
         return Observable.create(ObservableOnSubscribe<Message> { emitter ->
             val ref: CollectionReference = db.collection("messages")
-            ref.whereLessThan(Message.RANDOM,pickDate.time).orderBy(Message.RANDOM, Query.Direction.DESCENDING).limit(2)
+            ref.whereLessThan(Message.RANDOM, pickDate.time).orderBy(Message.RANDOM, Query.Direction.DESCENDING).limit(2)
             registration = ref.addSnapshotListener { snapshots, e ->
-                        if (e != null) {
-                            emitter.onError(e)
-                            return@addSnapshotListener
-                        }
+                if (e != null) {
+                    emitter.onError(e)
+                    return@addSnapshotListener
+                }
 
-                        var message = Message("1","", 0)
-                        Log.e("length snapshot","${snapshots?.size()}")
-                        snapshots?.let {
-                            for (doc in snapshots) {
-                                message = Message(doc!!.data[Message.ID].toString(),doc.data[Message.CONTENT].toString(), doc.data[Message.RANDOM]!!.toString().toLong())
-                                Log.e("message","${message.random}")
+                var message = Message("1", "", 0)
+                Log.e("length snapshot", "${snapshots?.size()}")
+                snapshots?.let {
+                    for (doc in snapshots) {
+                        message = Message(doc!!.data[Message.ID].toString(), doc.data[Message.CONTENT].toString(), doc.data[Message.RANDOM]!!.toString().toLong())
+                        Log.e("message", "${message.random}")
 
-                            }
-                        }
-                        emitter.onNext(message)
                     }
+                }
+                emitter.onNext(message)
+            }
         }).subscribeOn(Schedulers.io())
     }
 
-    fun cancelRegistration(){
+    fun cancelRegistration() {
         registration.remove()
     }
 

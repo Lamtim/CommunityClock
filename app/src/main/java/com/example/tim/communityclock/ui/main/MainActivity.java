@@ -7,18 +7,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 
 import com.example.tim.communityclock.R;
 import com.example.tim.communityclock.ViewModelProviderFactory;
-import com.example.tim.communityclock.data.model.db.Alarm;
 import com.example.tim.communityclock.ui.setalarm.SetAlarmActivity;
-
-import java.sql.Time;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -61,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         setAlarmFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,SetAlarmActivity.class);
+                Intent intent = new Intent(MainActivity.this, SetAlarmActivity.class);
                 startActivity(intent);
             }
         });

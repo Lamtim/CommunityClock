@@ -3,7 +3,6 @@ package com.example.tim.communityclock.ui.setalarm
 import android.annotation.SuppressLint
 import android.arch.lifecycle.MutableLiveData
 import android.util.Log
-import android.widget.Toast
 import com.example.tim.communityclock.data.model.db.Alarm
 import com.example.tim.communityclock.data.remote.api.MessageRepositoryImpl
 import com.example.tim.communityclock.data.remote.api.SongRepositoryImpl
@@ -44,20 +43,20 @@ class SetAlarmViewModel @Inject constructor(val repository: MessageRepositoryImp
 
     @SuppressLint("CheckResult")
     fun setNewAlarm(message: String, path: String) {
-        Log.e("setAlarm","viewmoded")
+        Log.e("setAlarm", "viewmoded")
         //repository.sendMessage(message).subscribe()
         //repositorySong.sendSong(File(path)).subscribe()
         repository.getOneMessage()
-                  .observeOn(AndroidSchedulers.mainThread())
-                  .subscribe(
-                      {
-                          repository.cancelRegistration()
-                          //getInteractor()!!.alarmRegistered(it)
-                      },
-                      {
-                          Log.d("FAILED", "FAILED")
-                      }
-                  )
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        {
+                            repository.cancelRegistration()
+                            //getInteractor()!!.alarmRegistered(it)
+                        },
+                        {
+                            Log.d("FAILED", "FAILED")
+                        }
+                )
     }
 
 

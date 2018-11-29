@@ -24,7 +24,7 @@ class SongRepositoryImpl @Inject constructor(private val db: FirebaseStorage) : 
             var uri = Uri.fromFile(file)
             val storageRef = db.reference
             val riversRef = storageRef.child("images/${file.name}")
-            if(uri.path!!.isEmpty())
+            if (uri.path!!.isEmpty())
                 return@create
             val uploadTask: UploadTask = riversRef.putFile(uri)
             uploadTask.addOnFailureListener {
@@ -48,7 +48,6 @@ class SongRepositoryImpl @Inject constructor(private val db: FirebaseStorage) : 
             }
         }).subscribeOn(Schedulers.io())
     }
-
 
 
 }
