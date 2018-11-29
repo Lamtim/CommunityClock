@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">CommunityClock</string>
     <string name="close">fermer</string>
+    <string name="setalarm_hint">Ecrivez un message pour quelqu\'un… quelque part…</string>
     <string name="report">report</string>
 </resources>

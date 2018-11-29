@@ -2,5 +2,6 @@
     <string name="app_name">CommunityClock</string>
     <string name="close">close</string>
     <string name="lores_ipsum" translatable="false">Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l\'imprimerie depuis les années 1500.</string>
+    <string name="setalarm_hint">Enter a message for someone… somewhere…</string>
     <string name="report">report</string>
 </resources>

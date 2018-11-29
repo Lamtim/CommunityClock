@@ -26,8 +26,4 @@ class MainViewModel @Inject constructor(val alarmRepositoryImpl: AlarmRepository
         alarmRepositoryImpl.deleteAll()
     }
 
-    fun addAlarm(){
-        doAsync { alarmRepositoryImpl.insertAlarm(Alarm(Date().time, "Bonne journée")) }
-    }
-
 }
