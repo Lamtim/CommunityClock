@@ -1,7 +1,7 @@
-package com.example.tim.communityclock.data.remote.api
+package com.example.tim.communityclock.data.repo
 
 import android.util.Log
-import com.example.tim.communityclock.data.model.api.Message
+import com.example.tim.communityclock.data.model.Message
 import com.example.tim.communityclock.domain.message.repository.MessageRepository
 import com.example.tim.communityclock.utils.DateUtils
 import com.google.firebase.firestore.CollectionReference

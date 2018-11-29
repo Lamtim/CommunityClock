@@ -1,16 +1,10 @@
-package com.example.tim.communityclock.data.remote.api
+package com.example.tim.communityclock.data.repo
 
 import android.net.Uri
-import android.util.Log
-import com.example.tim.communityclock.data.model.db.Song
 import com.example.tim.communityclock.domain.song.repository.SongRepository
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StreamDownloadTask
 import com.google.firebase.storage.UploadTask
 import io.reactivex.Completable
-import io.reactivex.CompletableOnSubscribe
 import io.reactivex.Observable
 import io.reactivex.ObservableOnSubscribe
 import io.reactivex.schedulers.Schedulers

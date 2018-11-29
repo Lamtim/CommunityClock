@@ -1,7 +1,8 @@
-package com.example.tim.communityclock.data.model.db
+package com.example.tim.communityclock.data.db
 
 import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.*
+import com.example.tim.communityclock.data.model.Alarm
 
 @Dao
 interface AlarmDao {

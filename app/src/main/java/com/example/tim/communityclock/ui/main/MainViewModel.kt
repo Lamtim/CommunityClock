@@ -2,9 +2,9 @@ package com.example.tim.communityclock.ui.main
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
-import com.example.tim.communityclock.data.local.AlarmRepositoryImpl
+import com.example.tim.communityclock.data.repo.AlarmRepositoryImpl
 
-import com.example.tim.communityclock.data.model.db.Alarm
+import com.example.tim.communityclock.data.model.Alarm
 import org.jetbrains.anko.doAsync
 
 import java.util.Date

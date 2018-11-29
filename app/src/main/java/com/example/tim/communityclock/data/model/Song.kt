@@ -1,4 +1,4 @@
-package com.example.tim.communityclock.data.model.db
+package com.example.tim.communityclock.data.model
 
 class Song(val id: String, val title: String) {
 

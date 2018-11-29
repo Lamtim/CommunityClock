@@ -19,7 +19,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <service android:name=".data.remote.notification.FirebaseServices">
+        <service android:name=".data.FirebaseServices">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>

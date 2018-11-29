@@ -1,4 +1,4 @@
-package com.example.tim.communityclock.data.model.api
+package com.example.tim.communityclock.data.model
 
 class Message(val id: String, val content: String, val random: Long) {
 

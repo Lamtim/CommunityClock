@@ -3,9 +3,9 @@ package com.example.tim.communityclock.ui.setalarm
 import android.annotation.SuppressLint
 import android.arch.lifecycle.MutableLiveData
 import android.util.Log
-import com.example.tim.communityclock.data.model.db.Alarm
-import com.example.tim.communityclock.data.remote.api.MessageRepositoryImpl
-import com.example.tim.communityclock.data.remote.api.SongRepositoryImpl
+import com.example.tim.communityclock.data.model.Alarm
+import com.example.tim.communityclock.data.repo.MessageRepositoryImpl
+import com.example.tim.communityclock.data.repo.SongRepositoryImpl
 import com.example.tim.communityclock.ui.base.BaseViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import java.util.*

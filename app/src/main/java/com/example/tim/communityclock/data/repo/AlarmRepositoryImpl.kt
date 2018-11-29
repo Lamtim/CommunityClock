@@ -1,8 +1,8 @@
-package com.example.tim.communityclock.data.local
+package com.example.tim.communityclock.data.repo
 
 import android.arch.lifecycle.LiveData
-import com.example.tim.communityclock.data.model.db.Alarm
-import com.example.tim.communityclock.data.model.db.AlarmDao
+import com.example.tim.communityclock.data.db.AlarmDao
+import com.example.tim.communityclock.data.model.Alarm
 import com.example.tim.communityclock.domain.alarm.repository.AlarmRepository
 import org.jetbrains.anko.doAsync
 import javax.inject.Inject

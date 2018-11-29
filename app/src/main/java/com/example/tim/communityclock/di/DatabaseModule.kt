@@ -2,8 +2,8 @@ package com.example.tim.communityclock.di
 
 import android.arch.persistence.room.Room
 import android.content.Context
-import com.example.tim.communityclock.data.model.db.AlarmDao
-import com.example.tim.communityclock.data.model.db.AppDatabase
+import com.example.tim.communityclock.data.db.AlarmDao
+import com.example.tim.communityclock.data.db.AppDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import dagger.Module

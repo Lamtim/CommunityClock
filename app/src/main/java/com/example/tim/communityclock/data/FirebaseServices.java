@@ -1,4 +1,4 @@
-package com.example.tim.communityclock.data.remote.notification;
+package com.example.tim.communityclock.data;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 

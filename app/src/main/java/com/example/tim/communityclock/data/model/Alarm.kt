@@ -1,4 +1,4 @@
-package com.example.tim.communityclock.data.model.db
+package com.example.tim.communityclock.data.model
 
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
