@@ -103,18 +103,12 @@ class SetAlarmActivity : BaseActivity(), SetAlarmInteractor {
     }
 
     private fun setAlarm(){
-        val calendar = Calendar.getInstance()
-        val time = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            Time(tp_alarm.hour, tp_alarm.minute, 0)
-        } else {
-            TODO("VERSION.SDK_INT < M")
-        }
         Log.e("setAlarm","setalarm")
-        setAlarmViewModel.setNewAlarm("Salut","")
+        setAlarmViewModel.setNewAlarm(et_message.text.toString(),"")
     }
 
     override fun alarmRegistered(message: Message) {
-        Toast.makeText(this,message.id,Toast.LENGTH_LONG).show()
+        Toast.makeText(this,message.content,Toast.LENGTH_LONG).show()
         onBackPressed()
     }
 

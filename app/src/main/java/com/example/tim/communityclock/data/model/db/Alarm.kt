@@ -7,7 +7,7 @@ import java.text.DateFormat
 @Entity
 class Alarm(
         var time: Long,
-        var messageDisplayed: String
+        var messageDisplayed: String?
 ) {
 
     @PrimaryKey(autoGenerate = true)

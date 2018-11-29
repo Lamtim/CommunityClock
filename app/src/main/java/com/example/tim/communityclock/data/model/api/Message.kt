@@ -1,6 +1,6 @@
 package com.example.tim.communityclock.data.model.api
 
-class Message(val id: String, val content: String, val random: Long) {
+class Message(val id: String, val content: String, val random: String) {
 
     companion object {
         const val ID: String = "id"

@@ -58,12 +58,9 @@ public class MainActivity extends AppCompatActivity {
         mAlarmRV = findViewById(R.id.rv_alarm);
 
         setAlarmFAB = findViewById(R.id.fab_set_alarm);
-        setAlarmFAB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,SetAlarmActivity.class);
-                startActivity(intent);
-            }
+        setAlarmFAB.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this,SetAlarmActivity.class);
+            startActivity(intent);
         });
     }
 

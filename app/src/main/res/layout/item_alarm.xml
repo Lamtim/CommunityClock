@@ -11,6 +11,16 @@
         android:layout_gravity="center"
         android:layout_weight="1" />
 
+    <TextView
+        android:id="@+id/tv_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textStyle="italic"
+        android:textSize="13sp"
+        android:textColor="@android:color/darker_gray"
+        android:layout_weight="1" />
+
     <android.support.v7.widget.SwitchCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

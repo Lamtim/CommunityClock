@@ -51,15 +51,18 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
     class AlarmViewHolder extends RecyclerView.ViewHolder {
 
         TextView time;
+        TextView message;
 
         AlarmViewHolder(@NonNull View itemView) {
             super(itemView);
             time = itemView.findViewById(R.id.tv_time);
+            message = itemView.findViewById(R.id.tv_message);
         }
 
         void bind(final Alarm alarm) {
             if (alarm != null) {
                 time.setText(alarm.formatTime());
+                message.setText(alarm.getMessageDisplayed());
             }
         }
     }
