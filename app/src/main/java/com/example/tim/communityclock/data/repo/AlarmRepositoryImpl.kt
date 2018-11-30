@@ -8,6 +8,7 @@ import org.jetbrains.anko.doAsync
 import javax.inject.Inject
 
 class AlarmRepositoryImpl @Inject constructor(private val alarmDao: AlarmDao) : AlarmRepository {
+
     override fun deleteAll() {
         doAsync { alarmDao.deleteAll() }
 
@@ -15,6 +16,10 @@ class AlarmRepositoryImpl @Inject constructor(private val alarmDao: AlarmDao) : 
 
     override fun insertAlarm(alarm: Alarm) {
         alarmDao.insertAlarm(alarm)
+    }
+
+    override fun updateAlarm(alarm: Alarm) {
+        alarmDao.updateAlarm(alarm)
     }
 
     override fun getAlarms(): LiveData<List<Alarm>> {

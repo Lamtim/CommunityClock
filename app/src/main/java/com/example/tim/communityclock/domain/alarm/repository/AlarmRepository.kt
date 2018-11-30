@@ -8,5 +8,7 @@ interface AlarmRepository {
 
     fun insertAlarm(alarm: Alarm)
 
+    fun updateAlarm(alarm: Alarm)
+
     fun deleteAll()
 }

@@ -5,16 +5,19 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
+import android.widget.CompoundButton
 
 import com.example.tim.communityclock.R
 import com.example.tim.communityclock.ViewModelProviderFactory
+import com.example.tim.communityclock.data.model.Alarm
 import com.example.tim.communityclock.ui.base.BaseActivity
 import com.example.tim.communityclock.ui.setalarm.SetAlarmActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 import javax.inject.Inject
 
-class MainActivity : BaseActivity() {
+class MainActivity : BaseActivity(), OnAlarmToggleListener {
 
     @Inject
     lateinit var mViewModelProviderFactory: ViewModelProviderFactory
@@ -37,6 +40,7 @@ class MainActivity : BaseActivity() {
     private fun getAlarms() {
         mMainViewModel.alarms!!.observe(this,
                 android.arch.lifecycle.Observer { alarms ->
+                    Log.e("lala","alarm changed")
                     mAlarmAdapter!!.setData(alarms)
                     mAlarmAdapter!!.notifyDataSetChanged()
                 })
@@ -55,8 +59,15 @@ class MainActivity : BaseActivity() {
         val linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         mAlarmRV!!.layoutManager = linearLayoutManager
         mAlarmRV!!.setHasFixedSize(true)
-        mAlarmAdapter = AlarmAdapter()
+        mAlarmAdapter = AlarmAdapter(this)
         mAlarmRV!!.adapter = mAlarmAdapter
     }
 
+    override fun onAlarmToggle(alarm: Alarm) {
+        mMainViewModel.updateAlarm(alarm)
+    }
+
+}
+interface OnAlarmToggleListener {
+    fun onAlarmToggle(alarm:Alarm)
 }
