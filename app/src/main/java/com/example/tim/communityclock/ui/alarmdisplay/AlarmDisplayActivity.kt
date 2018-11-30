@@ -15,15 +15,25 @@ import android.view.WindowManager
 import android.widget.TextView
 import java.text.SimpleDateFormat
 import android.media.MediaPlayer
+import android.util.Log
+import com.example.tim.communityclock.data.model.Alarm
 import com.example.tim.communityclock.ui.base.BaseActivity
 import com.example.tim.communityclock.utils.DateUtils
+import kotlinx.android.synthetic.main.activity_lock_screen.*
+import org.jetbrains.anko.doAsyncResult
 import javax.inject.Inject
 
 
 class AlarmDisplayActivity : BaseActivity(), AlarmDisplayInteractor {
 
+    companion object {
+        const val EXTRA_ALARM = "ALARM_DISPALLY_ACTIVITY"
+    }
+
     @set:Inject
     lateinit var mAlarmDisplayViewModel: AlarmDisplayViewModel
+
+    private var mPlayer: MediaPlayer? = null
 
     @SuppressLint("SimpleDateFormat")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,13 +53,18 @@ class AlarmDisplayActivity : BaseActivity(), AlarmDisplayInteractor {
             closeRing()
         }
 
-        val mPlayer = MediaPlayer.create(this, mAlarmDisplayViewModel.getSong())
-        mPlayer.start()
-        mPlayer.setOnCompletionListener {
-            mPlayer.start()
+        mPlayer = MediaPlayer.create(this, mAlarmDisplayViewModel.getSong())
+        mPlayer!!.start()
+        mPlayer!!.setOnCompletionListener {
+            mPlayer!!.start()
         }
 
-        findViewById<TextView>(R.id.hour).text = DateUtils.getDateNowToString(SimpleDateFormat("HH:mm"))
+        hour.text = DateUtils.getDateNowToString(SimpleDateFormat("HH:mm"))
+
+        mAlarmDisplayViewModel.getAlarm(intent.getLongExtra(EXTRA_ALARM,0)).observe(this,
+                android.arch.lifecycle.Observer { alarm ->
+                    message.text = alarm!!.messageDisplayed
+                })
 
     }
 
@@ -66,5 +81,11 @@ class AlarmDisplayActivity : BaseActivity(), AlarmDisplayInteractor {
         val pintent = PendingIntent.getService(this, 0, intent, 0)
         val alarm = getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarm.setRepeating(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, 60000, pintent)
+    }
+
+    override fun onDestroy() {
+        mPlayer!!.release()
+        mPlayer = null
+        super.onDestroy()
     }
 }

@@ -6,6 +6,8 @@ import com.example.tim.communityclock.data.model.Alarm
 interface AlarmRepository {
     fun getAlarms(): LiveData<List<Alarm>>
 
+    fun getAlarm(id: Long): LiveData<Alarm>
+
     fun insertAlarm(alarm: Alarm)
 
     fun deleteAll()
