@@ -1,13 +1,11 @@
 package com.example.tim.communityclock.data.repo
 
 import android.util.Log
+import com.example.tim.communityclock.BuildConfig
 import com.example.tim.communityclock.data.model.Message
 import com.example.tim.communityclock.domain.message.repository.MessageRepository
 import com.example.tim.communityclock.utils.DateUtils
-import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ListenerRegistration
-import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.*
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.ObservableOnSubscribe
@@ -24,10 +22,12 @@ class MessageRepositoryImpl @Inject constructor(private val db: FirebaseFirestor
     private lateinit var registration: ListenerRegistration
 
     override fun sendMessage(content: String): Completable {
-        val randomDate = DateUtils.getRandomDate()
-        val message = Message("message",content,DateFormat.getTimeInstance().format(randomDate))
+        val r = Random()
+        val i = r.nextInt(1000)
+        Log.e("INDEX","$i")
+        val message = Message("message",content,i)
         return Completable.create { emitter ->
-            db.collection("messages")
+            db.collection(BuildConfig.FIREBASE_FIRESTORE_NAME)
                     .add(message)
                     .addOnSuccessListener {
                         emitter.onComplete()
@@ -39,21 +39,26 @@ class MessageRepositoryImpl @Inject constructor(private val db: FirebaseFirestor
     }
 
     override fun getOneMessage(): Observable<Message> {
-        val pickDate = DateUtils.getRandomDate()
-        Log.e("PISCKDATE", "${pickDate.time}")
         return Observable.create(ObservableOnSubscribe<Message> { emitter ->
-            val ref: CollectionReference = db.collection("messages")
-            ref.whereLessThan(Message.RANDOM, pickDate.time).orderBy(Message.RANDOM, Query.Direction.DESCENDING).limit(2)
-            registration = ref.addSnapshotListener { snapshots, e ->
+            val ref: CollectionReference = db.collection(BuildConfig.FIREBASE_FIRESTORE_NAME)
+            val r = Random()
+            val i = r.nextInt(1000)
+            Log.e("INDEX","$i")
+            registration = ref
+                    .whereLessThanOrEqualTo("index", i)
+                    .orderBy("index",Query.Direction.DESCENDING)
+                    .limit(1)
+                    .addSnapshotListener { snapshots, e ->
                 if (e != null) {
                     emitter.onError(e)
                     return@addSnapshotListener
                 }
-                var message = Message("","", "")
-                Log.e("length snapshot","${snapshots?.size()}")
+                var message = Message("","", 0)
+                Log.e("Size","${snapshots!!.size()}")
                 snapshots?.let {
                     for (doc in snapshots) {
-                        message = Message(doc!!.data[Message.ID].toString(),doc.data[Message.CONTENT].toString(), doc.data[Message.RANDOM].toString())
+                        message = Message(doc.getString(Message.ID)!!,doc.getString(Message.CONTENT)!!, doc.getLong(Message.INDEX)!!.toInt())
+                        Log.e("Content","${message.content}")
                         break
                     }
                 }
