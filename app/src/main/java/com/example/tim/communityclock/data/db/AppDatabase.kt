@@ -6,7 +6,7 @@ import com.example.tim.communityclock.data.db.AlarmDao
 import com.example.tim.communityclock.data.model.Alarm
 
 
-@Database(entities = [Alarm::class], version = 1, exportSchema = false)
+@Database(entities = [Alarm::class], version = 2, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun alarmDao(): AlarmDao
 }

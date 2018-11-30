@@ -9,29 +9,38 @@
     <TextView
         android:id="@+id/tv_test"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_margin="16dp"
-        android:layout_height="wrap_content" />
+        android:layout_margin="16dp" />
+
     <TimePicker
         android:id="@+id/tp_alarm"
-        android:timePickerMode="spinner"
-        android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:timePickerMode="spinner">
 
     </TimePicker>
 
     <TextView
         android:id="@+id/tv_display_ring"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="16dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="16dp" />
+
+    <EditText
+        android:id="@+id/et_message"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:hint="@string/setalarm_hint" />
 
     <Button
         android:id="@+id/button_set"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:layout_gravity="bottom|center_horizontal"/>
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_margin="16dp" />
 </LinearLayout>

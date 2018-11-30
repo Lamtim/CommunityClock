@@ -12,6 +12,8 @@ import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.ObservableOnSubscribe
 import io.reactivex.schedulers.Schedulers
+import java.text.DateFormat
+import java.util.*
 
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -19,11 +21,11 @@ import javax.inject.Singleton
 @Singleton
 class MessageRepositoryImpl @Inject constructor(private val db: FirebaseFirestore) : MessageRepository {
 
-    lateinit var registration: ListenerRegistration
+    private lateinit var registration: ListenerRegistration
 
     override fun sendMessage(content: String): Completable {
         val randomDate = DateUtils.getRandomDate()
-        val message = Message("message", content, randomDate.time)
+        val message = Message("message",content,DateFormat.getTimeInstance().format(randomDate))
         return Completable.create { emitter ->
             db.collection("messages")
                     .add(message)
@@ -47,14 +49,12 @@ class MessageRepositoryImpl @Inject constructor(private val db: FirebaseFirestor
                     emitter.onError(e)
                     return@addSnapshotListener
                 }
-
-                var message = Message("1", "", 0)
-                Log.e("length snapshot", "${snapshots?.size()}")
+                var message = Message("","", "")
+                Log.e("length snapshot","${snapshots?.size()}")
                 snapshots?.let {
                     for (doc in snapshots) {
-                        message = Message(doc!!.data[Message.ID].toString(), doc.data[Message.CONTENT].toString(), doc.data[Message.RANDOM]!!.toString().toLong())
-                        Log.e("message", "${message.random}")
-
+                        message = Message(doc!!.data[Message.ID].toString(),doc.data[Message.CONTENT].toString(), doc.data[Message.RANDOM].toString())
+                        break
                     }
                 }
                 emitter.onNext(message)

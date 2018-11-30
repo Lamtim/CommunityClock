@@ -13,8 +13,6 @@ import com.example.tim.communityclock.R
 import com.example.tim.communityclock.data.model.Message
 import com.example.tim.communityclock.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_set_alarm.*
-import java.sql.Time
-import java.util.*
 import javax.inject.Inject
 
 class SetAlarmActivity : BaseActivity(), SetAlarmInteractor {
@@ -102,19 +100,13 @@ class SetAlarmActivity : BaseActivity(), SetAlarmInteractor {
         }
     }
 
-    private fun setAlarm() {
-        val calendar = Calendar.getInstance()
-        val time = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            Time(tp_alarm.hour, tp_alarm.minute, 0)
-        } else {
-            TODO("VERSION.SDK_INT < M")
-        }
-        Log.e("setAlarm", "setalarm")
-        setAlarmViewModel.setNewAlarm("Salut", "")
+    private fun setAlarm(){
+        Log.e("setAlarm","setalarm")
+        setAlarmViewModel.setNewAlarm(et_message.text.toString(),"")
     }
 
     override fun alarmRegistered(message: Message) {
-        Toast.makeText(this, message.id, Toast.LENGTH_LONG).show()
+        Toast.makeText(this,message.content,Toast.LENGTH_LONG).show()
         onBackPressed()
     }
 
