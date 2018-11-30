@@ -58,7 +58,6 @@ class SetAlarmViewModel @Inject constructor(private val messageRepository: Messa
         if (calendar == null){
             updateLeftTime()
         }
-        Log.e("setAlarm", "viewmoded")
         messageRepository.sendMessage(message).subscribe({
             messageRepository.getOneMessage()
                     .observeOn(AndroidSchedulers.mainThread())
@@ -66,10 +65,10 @@ class SetAlarmViewModel @Inject constructor(private val messageRepository: Messa
                             {
                                 doAsync { alarmRepository.insertAlarm(Alarm(calendar!!.timeInMillis, it.content))}
                                 messageRepository.cancelRegistration()
-                                getInteractor()!!.alarmRegistered(message = Message("1",message,""))
+                                getInteractor()!!.alarmRegistered()
                             },
                             {
-                                Log.d("FAILED", "FAILED")
+                                Log.e("FAILED", "FAILED")
                             }
                     )
         },{

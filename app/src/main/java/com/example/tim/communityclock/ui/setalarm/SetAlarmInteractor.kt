@@ -4,5 +4,5 @@ import com.example.tim.communityclock.data.model.Message
 
 interface SetAlarmInteractor {
 
-    fun alarmRegistered(message: Message)
+    fun alarmRegistered()
 }

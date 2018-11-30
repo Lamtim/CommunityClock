@@ -105,8 +105,7 @@ class SetAlarmActivity : BaseActivity(), SetAlarmInteractor {
         setAlarmViewModel.setNewAlarm(et_message.text.toString(),"")
     }
 
-    override fun alarmRegistered(message: Message) {
-        Toast.makeText(this,message.content,Toast.LENGTH_LONG).show()
+    override fun alarmRegistered() {
         onBackPressed()
     }
 
