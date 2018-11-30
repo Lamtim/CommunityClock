@@ -52,9 +52,9 @@ class MainViewModel @Inject constructor(val alarmRepositoryImpl: AlarmRepository
         intent.putExtra(AlarmsReceiver.EXTRA_ALARM_ID, alarm.id)
 
         // TEST
-        next = Calendar.getInstance()
+        /*next = Calendar.getInstance()
         next.timeInMillis = System.currentTimeMillis()
-        next.add(Calendar.SECOND, 5)
+        next.add(Calendar.SECOND, 5)*/
         // END TEST
 
         alarmManager.set(AlarmManager.RTC_WAKEUP, next.timeInMillis, PendingIntent.getBroadcast(appContext, alarm.id.toInt(), intent, PendingIntent.FLAG_UPDATE_CURRENT))
