@@ -55,7 +55,7 @@ class MainActivity : BaseActivity() {
         val linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         mAlarmRV!!.layoutManager = linearLayoutManager
         mAlarmRV!!.setHasFixedSize(true)
-        mAlarmAdapter = AlarmAdapter()
+        mAlarmAdapter = AlarmAdapter(this)
         mAlarmRV!!.adapter = mAlarmAdapter
     }
 

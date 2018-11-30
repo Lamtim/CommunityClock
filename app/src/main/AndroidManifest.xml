@@ -28,6 +28,9 @@
             android:name=".services.AlarmService"
             android:enabled="true" />
 
+        <receiver android:name=".services.AlarmsReceiver" />
+
+
         <activity
             android:name=".ui.main.MainActivity">
             <intent-filter>

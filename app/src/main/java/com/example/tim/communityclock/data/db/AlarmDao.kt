@@ -10,6 +10,9 @@ interface AlarmDao {
     @Query("SELECT * FROM alarm")
     fun getAlarms(): LiveData<List<Alarm>>
 
+    @Query("SELECT * FROM alarm WHERE id=:id")
+    fun getAlarm(id: Long): LiveData<Alarm>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAlarm(alarm: Alarm)
 

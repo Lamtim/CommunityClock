@@ -21,4 +21,8 @@ class AlarmRepositoryImpl @Inject constructor(private val alarmDao: AlarmDao) : 
         return alarmDao.getAlarms()
     }
 
+    override fun getAlarm(id: Long): LiveData<Alarm> {
+        return alarmDao.getAlarm(id)
+    }
+
 }

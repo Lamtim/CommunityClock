@@ -1,5 +1,6 @@
 package com.example.tim.communityclock.utils
 
+import android.annotation.SuppressLint
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -55,5 +56,10 @@ class DateUtils {
             return start + Math.round(Math.random() * (end - start)).toInt()
         }
 
+        @SuppressLint("SimpleDateFormat")
+        fun dateToString(date: Date): String {
+            val format: SimpleDateFormat = SimpleDateFormat("dd/MM/YYYY HH:mm:ss")
+            return format.format(date)
+        }
     }
 }
