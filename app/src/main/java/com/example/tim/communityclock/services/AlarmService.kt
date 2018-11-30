@@ -6,10 +6,10 @@ import android.os.IBinder
 import android.util.Log
 import com.example.tim.communityclock.ui.alarmdisplay.AlarmDisplayActivity
 
-class AlarmService: Service() {
+class AlarmService : Service() {
     override fun onCreate() {
         super.onCreate()
-        Log.e("Service","Create")
+        Log.e("Service", "Create")
         val dialogIntent = Intent(this, AlarmDisplayActivity::class.java)
         dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(dialogIntent)
@@ -17,12 +17,12 @@ class AlarmService: Service() {
     }
 
     override fun onBind(intent: Intent?): IBinder? {
-        Log.e("Service","bind")
+        Log.e("Service", "bind")
         return null
     }
 
     override fun onDestroy() {
-        Log.e("Service","destroyed")
+        Log.e("Service", "destroyed")
         super.onDestroy()
     }
 

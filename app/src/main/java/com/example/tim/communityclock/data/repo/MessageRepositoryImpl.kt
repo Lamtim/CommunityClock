@@ -1,7 +1,7 @@
-package com.example.tim.communityclock.data.remote.api
+package com.example.tim.communityclock.data.repo
 
 import android.util.Log
-import com.example.tim.communityclock.data.model.api.Message
+import com.example.tim.communityclock.data.model.Message
 import com.example.tim.communityclock.domain.message.repository.MessageRepository
 import com.example.tim.communityclock.utils.DateUtils
 import com.google.firebase.firestore.CollectionReference
@@ -21,7 +21,7 @@ import javax.inject.Singleton
 @Singleton
 class MessageRepositoryImpl @Inject constructor(private val db: FirebaseFirestore) : MessageRepository {
 
-    lateinit var registration: ListenerRegistration
+    private lateinit var registration: ListenerRegistration
 
     override fun sendMessage(content: String): Completable {
         val randomDate = DateUtils.getRandomDate()
@@ -33,37 +33,36 @@ class MessageRepositoryImpl @Inject constructor(private val db: FirebaseFirestor
                         emitter.onComplete()
                     }
                     .addOnFailureListener {
-                        emitter.onError(it) }
+                        emitter.onError(it)
+                    }
         }.subscribeOn(Schedulers.io())
     }
 
     override fun getOneMessage(): Observable<Message> {
         val pickDate = DateUtils.getRandomDate()
-        Log.e("PISCKDATE","${pickDate.time}")
+        Log.e("PISCKDATE", "${pickDate.time}")
         return Observable.create(ObservableOnSubscribe<Message> { emitter ->
             val ref: CollectionReference = db.collection("messages")
-            ref.whereLessThan(Message.RANDOM,pickDate.time).orderBy(Message.RANDOM, Query.Direction.DESCENDING).limit(2)
+            ref.whereLessThan(Message.RANDOM, pickDate.time).orderBy(Message.RANDOM, Query.Direction.DESCENDING).limit(2)
             registration = ref.addSnapshotListener { snapshots, e ->
-                        if (e != null) {
-                            emitter.onError(e)
-                            return@addSnapshotListener
-                        }
-
-                        var message = Message("1","", "")
-                        Log.e("length snapshot","${snapshots?.size()}")
-                        snapshots?.let {
-                            for (doc in snapshots) {
-                                message = Message(doc!!.data[Message.ID].toString(),doc.data[Message.CONTENT].toString(), DateFormat.getTimeInstance().format(doc.data[Message.RANDOM]as Date))
-                                Log.e("message","${message.random}")
-
-                            }
-                        }
-                        emitter.onNext(message)
+                if (e != null) {
+                    emitter.onError(e)
+                    return@addSnapshotListener
+                }
+                var message = Message("","", "")
+                Log.e("length snapshot","${snapshots?.size()}")
+                snapshots?.let {
+                    for (doc in snapshots) {
+                        message = Message(doc!!.data[Message.ID].toString(),doc.data[Message.CONTENT].toString(), doc.data[Message.RANDOM].toString())
+                        break
                     }
+                }
+                emitter.onNext(message)
+            }
         }).subscribeOn(Schedulers.io())
     }
 
-    fun cancelRegistration(){
+    fun cancelRegistration() {
         registration.remove()
     }
 

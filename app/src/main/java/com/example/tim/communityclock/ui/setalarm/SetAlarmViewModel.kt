@@ -3,20 +3,22 @@ package com.example.tim.communityclock.ui.setalarm
 import android.annotation.SuppressLint
 import android.arch.lifecycle.MutableLiveData
 import android.util.Log
-import com.example.tim.communityclock.data.local.AlarmRepositoryImpl
-import com.example.tim.communityclock.data.model.api.Message
-import com.example.tim.communityclock.data.model.db.Alarm
-import com.example.tim.communityclock.data.remote.api.MessageRepositoryImpl
-import com.example.tim.communityclock.data.remote.api.SongRepositoryImpl
+
+import com.example.tim.communityclock.data.model.Alarm
+import com.example.tim.communityclock.data.model.Message
+import com.example.tim.communityclock.data.repo.AlarmRepositoryImpl
+import com.example.tim.communityclock.data.repo.MessageRepositoryImpl
+import com.example.tim.communityclock.data.repo.SongRepositoryImpl
+
 import com.example.tim.communityclock.ui.base.BaseViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import org.jetbrains.anko.doAsync
 import java.util.*
 import javax.inject.Inject
 
-class SetAlarmViewModel @Inject constructor(val messageRepository: MessageRepositoryImpl,
-                                            val songRepository: SongRepositoryImpl,
-                                            val alarmRepository: AlarmRepositoryImpl) : BaseViewModel<SetAlarmInteractor>() {
+class SetAlarmViewModel @Inject constructor(private val messageRepository: MessageRepositoryImpl,
+                                            private val songRepository: SongRepositoryImpl,
+                                            private val alarmRepository: AlarmRepositoryImpl) : BaseViewModel<SetAlarmInteractor>() {
 
     var hourLeft: MutableLiveData<Long> = MutableLiveData()
     var minuteLeft: MutableLiveData<Long> = MutableLiveData()
@@ -52,25 +54,28 @@ class SetAlarmViewModel @Inject constructor(val messageRepository: MessageReposi
 
     @SuppressLint("CheckResult")
     fun setNewAlarm(message: String, path: String) {
+
         if (calendar == null){
             updateLeftTime()
         }
         Log.e("setAlarm", "viewmoded")
-        //messageRepository.sendMessage(message).subscribe()
-        //songRepository.sendSong(File(path)).subscribe()
-        messageRepository.getOneMessage()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        {
-                            messageRepository.cancelRegistration()
-                            //getInteractor()!!.alarmRegistered(it)
-                        },
-                        {
-                            Log.d("FAILED", "FAILED")
-                        }
-                )
-        doAsync { alarmRepository.insertAlarm(Alarm(calendar!!.timeInMillis, message))}
-        getInteractor()!!.alarmRegistered(message = Message("1",message,""))
+        messageRepository.sendMessage(message).subscribe({
+            messageRepository.getOneMessage()
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                            {
+                                doAsync { alarmRepository.insertAlarm(Alarm(calendar!!.timeInMillis, it.content))}
+                                messageRepository.cancelRegistration()
+                                getInteractor()!!.alarmRegistered(message = Message("1",message,""))
+                            },
+                            {
+                                Log.d("FAILED", "FAILED")
+                            }
+                    )
+        },{
+            Log.e("Error subscribe message",it.message)
+        })
+
     }
 
 }

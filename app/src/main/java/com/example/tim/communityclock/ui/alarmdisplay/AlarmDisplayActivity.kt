@@ -15,13 +15,12 @@ import android.view.WindowManager
 import android.widget.TextView
 import java.text.SimpleDateFormat
 import android.media.MediaPlayer
-import android.net.Uri
 import com.example.tim.communityclock.ui.base.BaseActivity
 import com.example.tim.communityclock.utils.DateUtils
 import javax.inject.Inject
 
 
-class AlarmDisplayActivity: BaseActivity(), AlarmDisplayInteractor{
+class AlarmDisplayActivity : BaseActivity(), AlarmDisplayInteractor {
 
     @set:Inject
     lateinit var mAlarmDisplayViewModel: AlarmDisplayViewModel

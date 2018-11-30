@@ -1,16 +1,16 @@
-package com.example.tim.communityclock.data.model.db
+package com.example.tim.communityclock.data.db
 
 import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
 import android.arch.persistence.room.*
+import com.example.tim.communityclock.data.model.Alarm
 
 @Dao
 interface AlarmDao {
 
     @Query("SELECT * FROM alarm")
-    fun getAlarms() : LiveData<List <Alarm>>
+    fun getAlarms(): LiveData<List<Alarm>>
 
-    @Insert (onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAlarm(alarm: Alarm)
 
     @Update

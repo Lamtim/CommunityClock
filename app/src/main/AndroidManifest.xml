@@ -19,7 +19,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <service android:name=".data.remote.notification.FirebaseServices">
+        <service android:name=".data.FirebaseServices">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
@@ -28,7 +28,6 @@
             android:name=".services.AlarmService"
             android:enabled="true" />
 
-
         <activity
             android:name=".ui.main.MainActivity">
             <intent-filter>
@@ -36,6 +35,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
         <activity
             android:name=".ui.alarmdisplay.AlarmDisplayActivity"
             android:screenOrientation="sensorPortrait"

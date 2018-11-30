@@ -10,11 +10,9 @@ import android.support.v4.content.ContextCompat
 import android.util.Log
 import android.widget.Toast
 import com.example.tim.communityclock.R
-import com.example.tim.communityclock.data.model.api.Message
+import com.example.tim.communityclock.data.model.Message
 import com.example.tim.communityclock.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_set_alarm.*
-import java.sql.Time
-import java.util.*
 import javax.inject.Inject
 
 class SetAlarmActivity : BaseActivity(), SetAlarmInteractor {
@@ -33,20 +31,20 @@ class SetAlarmActivity : BaseActivity(), SetAlarmInteractor {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_set_alarm)
 
-        setAlarmViewModel.hourLeft!!.observe(this,
+        setAlarmViewModel.hourLeft.observe(this,
                 android.arch.lifecycle.Observer { hours ->
                     if (hours != null) {
                         updateLeftTime(hours, minutes)
                     }
                 })
-        setAlarmViewModel.minuteLeft!!.observe(this,
+        setAlarmViewModel.minuteLeft.observe(this,
                 android.arch.lifecycle.Observer { minutes ->
                     if (minutes != null) {
                         updateLeftTime(hours, minutes)
                     }
                 }
         )
-        setAlarmViewModel.alarmCreated!!.observe(this,
+        setAlarmViewModel.alarmCreated.observe(this,
                 android.arch.lifecycle.Observer { alarm ->
                     if (alarm != null) {
                         tv_display_ring.text = alarm.formatTime()
